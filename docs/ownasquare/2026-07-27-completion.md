@@ -50,6 +50,11 @@ No provider changes were submitted during the local foundation stage.
 - Cloudflare currently has no OwnASquare zones or app projects.
 - GoDaddy contains `ownasquare.com`.
 - GoDaddy contains `buggum.com`, not the requested `buggom.com` spelling.
+- `ownasquare.com` currently delegates DNS to HostGator.
+- The current HTTP origin serves an error placeholder and its HTTPS certificate
+  does not match the domain.
+- The audit found an apex and `www` web address, but no public apex MX or TXT
+  response.
 - No DNS, nameserver, transfer, payment, credential, or agreement action was
   performed.
 
@@ -59,8 +64,8 @@ No provider changes were submitted during the local foundation stage.
 - Create the first Cloudflare Worker deployment.
 - Verify its `workers.dev` preview.
 - Add the `ownasquare.com` zone.
-- Review imported DNS before changing nameservers.
+- Review Cloudflare's imported DNS against the live HostGator records before
+  changing nameservers.
 - Bind the active zone to the Worker.
 - Implement the central account Worker, D1 migrations, email delivery, and
   payment-provider integration as separate reviewed stages.
-

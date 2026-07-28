@@ -7,6 +7,12 @@
 - GoDaddy lists `ownasquare.com`.
 - GoDaddy lists `buggum.com`.
 - GoDaddy does not show the requested spelling `buggom.com`.
+- GoDaddy is the registrar for `ownasquare.com`, but HostGator is the current
+  authoritative DNS provider.
+- The apex and `www` currently resolve to the same HostGator origin.
+- No public apex MX or TXT response was observed during the 2026-07-27 audit.
+- The current HTTP origin serves an error placeholder, and the current HTTPS
+  certificate does not match `ownasquare.com`.
 
 No account IDs, credentials, nameserver values, private DNS records, or
 registrar authorization data belong in this repository.
@@ -19,9 +25,11 @@ registrar authorization data belong in this repository.
 4. Verify homepage, health response, headers, phone/tablet/desktop layout, and
    both color modes.
 5. Add `ownasquare.com` to Cloudflare.
-6. Review every imported DNS record against GoDaddy's current zone.
+6. Review every imported DNS record against the live HostGator zone. GoDaddy
+   does not currently host the authoritative records.
 7. Preserve website, mail, verification, and other service records.
-8. Change the registrar nameservers only after explicit action-time approval.
+8. Replace the HostGator nameservers at GoDaddy only after explicit action-time
+   approval.
 9. Wait for Cloudflare to report the zone active.
 10. Bind the Worker custom domain and verify TLS and public behavior.
 
@@ -64,4 +72,3 @@ Pause immediately before:
 - Accepting registrar or transfer agreements.
 - Paying a transfer or renewal charge.
 - Solving a CAPTCHA or entering a password.
-
