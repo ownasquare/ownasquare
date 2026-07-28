@@ -1,0 +1,25 @@
+{
+  "name": "ownasquare-platform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The OwnASquare parent site and shared platform foundation.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "deploy:dry-run": "wrangler deploy --dry-run",
+    "typegen": "wrangler types",
+    "typegen:check": "wrangler types --check",
+    "test": "node --test",
+    "test:e2e": "playwright test",
+    "check": "npm run typegen:check && npm test && npm run test:e2e && npm run deploy:dry-run"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.0",
+    "@types/node": "^26.1.2",
+    "wrangler": "^4.0.0"
+  }
+}

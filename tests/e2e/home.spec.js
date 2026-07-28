@@ -1,0 +1,99 @@
+import { expect, test } from "@playwright/test";
+
+test("the core message and shortest path work at every supported size", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: "One account. A thousand focused tools.",
+    }),
+  ).toBeVisible();
+
+  await page.getByRole("link", { name: "See how access works" }).click();
+
+  await expect(
+    page.getByRole("heading", {
+      level: 2,
+      name: "The same useful app, two simple ways.",
+    }),
+  ).toBeInViewport();
+
+  const pageWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+  const viewportWidth = page.viewportSize()?.width;
+  expect(pageWidth).toBeLessThanOrEqual(viewportWidth ?? pageWidth);
+});
+
+test("automatic dark mode and the explicit theme control both work", async ({
+  page,
+}) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("/");
+
+  const themeButton = page.getByRole("button", { name: "Switch to light mode" });
+  await expect(themeButton).toBeVisible();
+  await expect(themeButton).toHaveAttribute("aria-pressed", "true");
+
+  await themeButton.click();
+
+  await expect(
+    page.getByRole("button", { name: "Switch to dark mode" }),
+  ).toHaveAttribute("aria-pressed", "false");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+});
+
+test("hosted-plan copy keeps readable contrast in dark mode", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("/");
+
+  const contrast = await page.locator(".hosted-card").evaluate((card) => {
+    const paragraph = card.querySelector("p:not(.card-label)");
+    if (!paragraph) {
+      return 0;
+    }
+
+    const channel = (value) => {
+      const normalized = value / 255;
+      return normalized <= 0.04045
+        ? normalized / 12.92
+        : ((normalized + 0.055) / 1.055) ** 2.4;
+    };
+
+    const luminance = (color) => {
+      const values = color.match(/\d+(?:\.\d+)?/g)?.slice(0, 3).map(Number);
+      if (!values || values.length !== 3) {
+        return 0;
+      }
+
+      return (
+        0.2126 * channel(values[0]) +
+        0.7152 * channel(values[1]) +
+        0.0722 * channel(values[2])
+      );
+    };
+
+    const foreground = luminance(getComputedStyle(paragraph).color);
+    const background = luminance(getComputedStyle(card).backgroundColor);
+    const lighter = Math.max(foreground, background);
+    const darker = Math.min(foreground, background);
+
+    return (lighter + 0.05) / (darker + 0.05);
+  });
+
+  expect(contrast).toBeGreaterThanOrEqual(4.5);
+});
+
+test("the health endpoint is reachable through the local Worker", async ({
+  request,
+}) => {
+  const response = await request.get("/api/health");
+
+  expect(response.ok()).toBe(true);
+  expect(await response.json()).toEqual({
+    ok: true,
+    service: "ownasquare-platform",
+    status: "ready",
+  });
+});
