@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const siteRoot = new URL("../public/", import.meta.url);
+const wranglerConfig = new URL("../wrangler.jsonc", import.meta.url);
 
 test("homepage states the hosted and self-hosted choices honestly", async () => {
   const html = await readFile(new URL("index.html", siteRoot), "utf8");
@@ -33,3 +34,8 @@ test("styles include mobile, tablet, desktop, dark, and reduced-motion rules", a
   assert.match(css, /prefers-reduced-motion: no-preference/);
 });
 
+test("production assets pass through the Worker security-header layer", async () => {
+  const config = JSON.parse(await readFile(wranglerConfig, "utf8"));
+
+  assert.equal(config.assets.run_worker_first, true);
+});
