@@ -44,6 +44,40 @@ test("automatic dark mode and the explicit theme control both work", async ({
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 });
 
+test("the adventure tab opens the founder journal at every supported size", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: "The Adventure" }).click();
+
+  await expect(page).toHaveURL(/\/adventure\/$/);
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: "Build what people need. Share every lesson.",
+    }),
+  ).toBeVisible();
+  await expect(page.getByText("Recording soon")).toHaveCount(5);
+
+  const pageWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = page.viewportSize()?.width;
+  expect(pageWidth).toBeLessThanOrEqual(viewportWidth ?? pageWidth);
+});
+
+test("the adventure page shares the same theme control", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("/adventure/");
+
+  const themeButton = page.getByRole("button", {
+    name: "Switch to light mode",
+  });
+  await expect(themeButton).toBeVisible();
+  await themeButton.click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+});
+
 test("hosted-plan copy keeps readable contrast in dark mode", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("/");

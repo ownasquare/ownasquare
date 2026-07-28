@@ -8,6 +8,13 @@ Date: 2026-07-27
 - Built the initial parent-company single-page homepage.
 - Added mobile-first phone, tablet, and desktop layouts.
 - Added automatic light/dark mode and a compact manual theme control.
+- Added a shared Home/The Adventure top navigation that remains compact on
+  phone, tablet, and desktop layouts.
+- Added `/adventure/`, a dedicated founder-story and video-journal page about
+  the five-year startup lesson, the thousand-app reset, the high-pain problem
+  filter, the build tools, and learning from real users.
+- Added five truthful upcoming video chapters labeled `Recording soon`; no
+  unpublished recording is represented as a playable video.
 - Added a Cloudflare Worker with Worker Static Assets.
 - Activated Cloudflare authoritative DNS for `ownasquare.com`.
 - Attached `ownasquare.com` and `www.ownasquare.com` as exact production
@@ -25,15 +32,31 @@ Date: 2026-07-27
 
 ## Validation
 
-`npm run check` passed after the custom-domain configuration:
+`npm run check` passed after the Adventure page implementation:
 
 - Cloudflare-generated bindings are current.
-- 9 unit and source-contract tests passed.
-- 12 Playwright checks passed across phone, tablet, and desktop.
+- 11 unit and source-contract tests passed.
+- 18 Playwright checks passed across phone, tablet, and desktop.
 - Light mode, dark mode, explicit theme switching, no horizontal overflow,
-  health behavior, and dark-mode text contrast were exercised.
+  homepage-to-Adventure navigation, Adventure-page identity, health behavior,
+  and dark-mode text contrast were exercised.
 - Wrangler's deployment dry run completed with the expected static asset
   binding.
+
+The rendered Adventure flow was also verified through the in-app browser at
+the local Worker:
+
+- The homepage presented unique Home and The Adventure tabs with the correct
+  active state.
+- Activating The Adventure opened `/adventure/` with the expected page title,
+  founder headline, five upcoming video chapters, and build principles.
+- The in-page `Watch the journey unfold` action moved the video journal heading
+  into view.
+- Desktop dark, mobile dark, and mobile light views were visually inspected.
+- The first mobile pass exposed a three-row header. The grid placement was
+  corrected so brand and theme share the first row and navigation occupies the
+  second.
+- Console readback contained no warnings or errors after the correction.
 
 The rendered site was also inspected in the user's Chrome browser. The first
 inspection found low-contrast hosted-plan copy in dark mode. The styles were
@@ -109,6 +132,8 @@ expiring:
 
 ## Remaining platform work
 
+- Supply and approve real video files or hosted video URLs before replacing any
+  `Recording soon` state with a playable recording.
 - Allow recursive DNS caches to expire naturally; no configuration action is
   required.
 - Decide whether one hostname should redirect to the other. The current
@@ -123,20 +148,21 @@ expiring:
 - Validation Environment: local Worker, deployed Cloudflare Worker fallback,
   active Cloudflare Custom Domains, authoritative DNS, and real Chromium.
 - Validation Scope: parent homepage, responsive behavior, themes, health API,
-  static asset routing, exact hostname bindings, TLS, and production response
-  headers.
+  static asset routing, exact hostname bindings, Adventure navigation and
+  content, TLS, and production response headers.
 - Data Integrity Classification: real deployed Worker and real provider state;
   no application database exists yet.
 - Mock/Fixture Usage: none for hosted proof; local tests use controlled Worker
   request objects and local static assets.
-- Production Validation Status: Worker fallback and both exact Custom Domains
-  verified against the active Cloudflare edge. Public recursive cache expiry
-  remains in progress at some resolvers.
+- Production Validation Status: the existing Worker fallback and exact Custom
+  Domains remain verified against the active Cloudflare edge. The new
+  Adventure route is locally validated and awaits deployment/readback.
 - Localhost Validation Integrity: real local Worker runtime, not a production
   sign-off substitute.
 - Warning/Issue Triage: the production static-header gap was `fixed_now`; the
   initial Custom Domain conflict with imported apex/`www` A records was
-  `fixed_now`; recursive DNS cache lag is `verified_external_or_stale`; the
+  `fixed_now`; the mobile three-row header was `fixed_now`; recursive DNS cache
+  lag is `verified_external_or_stale`; the
   repeated Playwright color-environment message is
   `verified_external_or_stale` because all assertions passed and no warning was
   suppressed.

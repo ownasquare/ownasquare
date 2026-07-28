@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Follow the personal journey behind OwnASquare and the attempt to build one thousand genuinely useful apps."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f4f1e8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#11120f" media="(prefers-color-scheme: dark)" />
+    <title>The Adventure — Building 1,000 Useful Apps | OwnASquare</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script>
+      try {
+        const savedTheme = localStorage.getItem("ownasquare-theme");
+        if (savedTheme === "light" || savedTheme === "dark") {
+          document.documentElement.dataset.theme = savedTheme;
+        }
+      } catch {}
+    </script>
+    <script src="/app.js" type="module"></script>
+  </head>
+  <body class="adventure-page">
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="OwnASquare home">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <span>OwnASquare</span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary">
+        <a class="nav-tab" href="/">Home</a>
+        <a class="nav-tab" href="/adventure/" aria-current="page">The Adventure</a>
+      </nav>
+
+      <button
+        class="theme-toggle"
+        type="button"
+        aria-label="Switch color theme"
+        aria-pressed="false"
+        data-theme-toggle
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path
+            d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"
+          />
+        </svg>
+        <span data-theme-label>Theme</span>
+      </button>
+    </header>
+
+    <main id="main">
+      <section class="story-hero" aria-labelledby="story-title">
+        <div class="story-hero-copy">
+          <p class="eyebrow">
+            <span class="status-dot" aria-hidden="true"></span>
+            The story behind 1,000 apps
+          </p>
+          <h1 id="story-title">Build what people need. Share every lesson.</h1>
+          <p class="story-lede">
+            I spent five years building a startup that went nowhere because it
+            was not useful enough. This is the reset: one thousand small apps,
+            each chosen because a real problem is painful, urgent, and worth
+            solving.
+          </p>
+          <a class="primary-action" href="#journal">
+            Watch the journey unfold
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="m7 12 10 0m-4-4 4 4-4 4" />
+            </svg>
+          </a>
+        </div>
+
+        <aside class="story-manifesto" aria-label="The OwnASquare build promise">
+          <span class="manifesto-count">1,000 useful apps</span>
+          <strong>No more building in the dark.</strong>
+          <p>Find the pain. Build the smallest answer. Put it in people’s hands.</p>
+        </aside>
+      </section>
+
+      <section class="journal-section" id="journal" aria-labelledby="journal-title">
+        <div class="journal-heading">
+          <div>
+            <p class="eyebrow">The video journal</p>
+            <h2 id="journal-title">The journey, one honest recording at a time.</h2>
+          </div>
+          <p>
+            New videos will appear here as the recordings are finished. Each
+            chapter will show the real tools, decisions, mistakes, and proof
+            behind the apps.
+          </p>
+        </div>
+
+        <div class="episode-grid">
+          <article class="episode-card">
+            <div class="episode-visual" aria-hidden="true">
+              <span class="play-mark"></span>
+              <span class="episode-number">01</span>
+            </div>
+            <div class="episode-copy">
+              <p class="episode-state">Recording soon</p>
+              <h3>The startup that taught me what not to build</h3>
+              <p>
+                The honest beginning: five years of effort, the cost of building
+                without enough real need, and the lesson that changed the
+                direction of my work.
+              </p>
+            </div>
+          </article>
+
+          <article class="episode-card">
+            <div class="episode-visual" aria-hidden="true">
+              <span class="play-mark"></span>
+              <span class="episode-number">02</span>
+            </div>
+            <div class="episode-copy">
+              <p class="episode-state">Recording soon</p>
+              <h3>Why 1,000 apps — and why usefulness comes first</h3>
+              <p>
+                Why the goal is not one giant product, but a thousand focused
+                answers that each remove one painful obstacle.
+              </p>
+            </div>
+          </article>
+
+          <article class="episode-card">
+            <div class="episode-visual" aria-hidden="true">
+              <span class="play-mark"></span>
+              <span class="episode-number">03</span>
+            </div>
+            <div class="episode-copy">
+              <p class="episode-state">Recording soon</p>
+              <h3>How I choose what to build</h3>
+              <p>
+                The high-pain filter: urgency, money lost, time wasted, weak
+                alternatives, and whether a very small app can create a useful
+                result quickly.
+              </p>
+            </div>
+          </article>
+
+          <article class="episode-card">
+            <div class="episode-visual" aria-hidden="true">
+              <span class="play-mark"></span>
+              <span class="episode-number">04</span>
+            </div>
+            <div class="episode-copy">
+              <p class="episode-state">Recording soon</p>
+              <h3>The tools I use to move from pain point to working app</h3>
+              <p>
+                A look at the research, design, coding, testing, and publishing
+                tools that help turn a qualified problem into something people
+                can use.
+              </p>
+            </div>
+          </article>
+
+          <article class="episode-card">
+            <div class="episode-visual" aria-hidden="true">
+              <span class="play-mark"></span>
+              <span class="episode-number">05</span>
+            </div>
+            <div class="episode-copy">
+              <p class="episode-state">Recording soon</p>
+              <h3>What the apps teach me after they meet real people</h3>
+              <p>
+                What worked, what missed, what users actually needed, and how
+                those lessons change the next app in the thousand-app journey.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="principles-section" aria-labelledby="principles-title">
+        <div>
+          <p class="eyebrow">The build filter</p>
+          <h2 id="principles-title">Useful before impressive.</h2>
+          <p class="principles-intro">
+            Every app has to earn its place by solving a real problem more
+            simply than the alternatives.
+          </p>
+        </div>
+
+        <ol class="principle-list">
+          <li>
+            <span>01</span>
+            <div>
+              <h3>Start with pain</h3>
+              <p>
+                The problem must be urgent, expensive, or painfully
+                time-consuming.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span>02</span>
+            <div>
+              <h3>Build the smallest useful answer</h3>
+              <p>
+                Remove clicks, settings, and features until the result feels
+                obvious.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span>03</span>
+            <div>
+              <h3>Learn in public</h3>
+              <p>
+                Share the tools, decisions, failures, and evidence instead of
+                pretending the process is effortless.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="adventure-cta" aria-labelledby="adventure-cta-title">
+        <p class="eyebrow">The work is already underway</p>
+        <h2 id="adventure-cta-title">One painful problem. One simple app. Then the next.</h2>
+        <a class="primary-action" href="/">
+          Explore OwnASquare
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="m7 12 10 0m-4-4 4 4-4 4" />
+          </svg>
+        </a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand footer-brand" href="/" aria-label="OwnASquare home">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <span>OwnASquare</span>
+      </a>
+      <p>Focused software, made approachable.</p>
+      <p>&copy; <span data-year></span> OwnASquare.</p>
+    </footer>
+  </body>
+</html>

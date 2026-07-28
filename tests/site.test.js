@@ -25,6 +25,29 @@ test("homepage includes baseline accessibility and responsive metadata", async (
   assert.match(html, /prefers-color-scheme/);
 });
 
+test("homepage links to the founder adventure", async () => {
+  const html = await readFile(new URL("index.html", siteRoot), "utf8");
+
+  assert.match(html, /href="\/adventure\/"/);
+  assert.match(html, />The Adventure</);
+});
+
+test("adventure page tells the useful-app story without inventing published videos", async () => {
+  const html = await readFile(
+    new URL("adventure/index.html", siteRoot),
+    "utf8",
+  );
+
+  assert.match(html, /The Adventure/);
+  assert.match(html, /five years/i);
+  assert.match(html, /high-pain/i);
+  assert.match(html, /tools I use/i);
+  assert.match(html, /How I choose what to build/i);
+  assert.match(html, /Recording soon/i);
+  assert.doesNotMatch(html, /<iframe/i);
+  assert.match(html, /aria-current="page"/);
+});
+
 test("styles include mobile, tablet, desktop, dark, and reduced-motion rules", async () => {
   const css = await readFile(new URL("styles.css", siteRoot), "utf8");
 
