@@ -4,21 +4,32 @@
 
 - The OwnASquare Cloudflare account has one deployed Worker,
   `ownasquare-platform`.
-- `ownasquare.com` has been added as a pending Cloudflare zone on the free plan.
-- Cloudflare imported the wildcard, apex, and `www` A records. Independent
-  public DNS checks returned the same HostGator origin for all three.
-- Cloudflare has assigned two replacement nameservers, but the registrar still
-  uses the existing HostGator nameservers.
+- `ownasquare.com` is an active Cloudflare zone on the free plan.
+- GoDaddy delegates `ownasquare.com` to the two Cloudflare-assigned
+  nameservers. Registrar readback, public delegation, and direct authoritative
+  queries all confirm the cutover.
+- `ownasquare.com` and `www.ownasquare.com` are exact production Custom Domains
+  for `ownasquare-platform`.
+- Cloudflare's authoritative DNS returns its proxied IPv4 and IPv6 addresses
+  for both production hostnames.
+- The imported apex and `www` HostGator A records were removed before the
+  Custom Domains were attached. The imported proxied wildcard record was
+  deliberately preserved for later subdomain migration work.
+- Valid TLS, the homepage, `/api/health`, and the Worker-authored security
+  headers were verified on both exact hostnames by resolving directly against
+  the new authoritative Cloudflare addresses.
+- Some recursive resolvers can temporarily retain the former HostGator address
+  while nameserver-delegation caches expire. This is passive DNS propagation,
+  not a remaining configuration action.
 - GoDaddy shows no DS records, so DNSSEC is currently off.
 - GoDaddy lists `ownasquare.com`.
 - GoDaddy lists `buggum.com`.
 - GoDaddy does not show the requested spelling `buggom.com`.
-- GoDaddy is the registrar for `ownasquare.com`, but HostGator is the current
+- GoDaddy remains the registrar for `ownasquare.com`; Cloudflare is now the
   authoritative DNS provider.
-- The wildcard, apex, and `www` currently resolve to the same HostGator origin.
 - No public apex MX or TXT response was observed during the 2026-07-27 audit.
-- The current HTTP origin serves an error placeholder, and the current HTTPS
-  certificate does not match `ownasquare.com`.
+- The `workers.dev` fallback remains enabled, while deployment preview URLs are
+  disabled.
 
 No account IDs, credentials, assigned nameserver values, private DNS records,
 or registrar authorization data belong in this repository.
@@ -36,12 +47,14 @@ or registrar authorization data belong in this repository.
    MX or TXT response was observed.
 7. Confirm DNSSEC is off before cutover. Completed; GoDaddy shows no DS records.
 8. Replace the HostGator nameservers at GoDaddy only after explicit action-time
-   approval. Pending.
-9. Wait for Cloudflare to report the zone active. Pending.
-10. Bind both the apex and `www` exact custom domains to the Worker. Cloudflare
-    requires an active zone before this step. Pending.
+   approval. Completed after the user approved the exact cutover.
+9. Wait for Cloudflare to report the zone active. Completed.
+10. Remove only the conflicting imported apex and `www` A records, preserve
+    the wildcard, and bind both exact custom domains to the Worker. Completed.
 11. Verify DNS, TLS, homepage, health response, security headers, and hostname
-    behavior on both public hostnames. Pending.
+    behavior on both public hostnames. Completed against authoritative
+    Cloudflare DNS and the active edge. Recursive-cache expiration remains
+    outside the deployment path and requires no additional provider change.
 
 DNS onboarding and registrar transfer are separate decisions. DNS can move to
 Cloudflare while GoDaddy remains the registrar. A later transfer should proceed
@@ -73,7 +86,7 @@ unreviewed bulk action.
 
 ## Confirmation boundaries
 
-Pause immediately before:
+Pause immediately before any future:
 
 - Changing nameservers or DNS records.
 - Creating additional API tokens or credentials.
@@ -81,6 +94,7 @@ Pause immediately before:
 - Paying a transfer or renewal charge.
 - Solving a CAPTCHA or entering a password.
 
-The repository, first Worker deployment, and Cloudflare zone were already
-approved and completed on 2026-07-27. Their earlier confirmation gates no
-longer apply to continuation work for those completed actions.
+The repository, first Worker deployment, Cloudflare zone, `ownasquare.com`
+nameserver cutover, and exact apex/`www` Custom Domains were approved and
+completed on 2026-07-27. Their earlier confirmation gates no longer apply to
+those completed actions. They do not authorize changes to another domain.

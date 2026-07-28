@@ -39,3 +39,20 @@ test("production assets pass through the Worker security-header layer", async ()
 
   assert.equal(config.assets.run_worker_first, true);
 });
+
+test("production binds both exact OwnASquare hostnames as custom domains", async () => {
+  const config = JSON.parse(await readFile(wranglerConfig, "utf8"));
+
+  assert.equal(config.workers_dev, true);
+  assert.equal(config.preview_urls, false);
+  assert.deepEqual(config.routes, [
+    {
+      pattern: "ownasquare.com",
+      custom_domain: true,
+    },
+    {
+      pattern: "www.ownasquare.com",
+      custom_domain: true,
+    },
+  ]);
+});

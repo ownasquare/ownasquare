@@ -6,6 +6,18 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
+  "workers_dev": true,
+  "preview_urls": false,
+  "routes": [
+    {
+      "pattern": "ownasquare.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.ownasquare.com",
+      "custom_domain": true
+    }
+  ],
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
