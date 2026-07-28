@@ -9,9 +9,9 @@ Canonical handoff:
 
 `/Users/fortunevieyra/Documents/Github/beladed.com/docs/handoffs/2026-07-27-codex-ownasquare-platform-foundation.handoff.mdc`
 
-Repository state at creation:
+Current product/provider evidence:
 
 - Branch: `main`
 - Remote: `https://github.com/ownasquare/ownasquare`
-- Last pushed implementation/documentation commit: `4758254`
-
+- Initial implementation commit: `4758254`
+- Production hardening and provider documentation commit: `85a5e74`
