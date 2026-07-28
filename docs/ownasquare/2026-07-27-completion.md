@@ -67,6 +67,8 @@ The deployed Worker was then verified at
 
 - The homepage returned HTTP 200 and rendered correctly in the signed-in Chrome
   session.
+- `/adventure/` returned HTTP 200 with the expected page title, founder
+  headline, and truthful upcoming-video states.
 - `/api/health` returned the expected ready JSON response.
 - The homepage and health response both returned the expected HSTS, CSP,
   frame-denial, referrer, permissions, and content-type security headers.
@@ -88,6 +90,20 @@ expiring:
   DNS propagation, rendered the apex at desktop/light and `www` at
   mobile/dark. Both views showed the expected title, headline, responsive
   layout, complete content, and no error surface.
+
+The Adventure release was then deployed and read back independently:
+
+- `/adventure/` returned HTTP 200 from the stable Worker URL, apex, and `www`.
+- The production route returned the expected CSP, permissions, referrer, and
+  content-type security headers.
+- The stable Worker URL rendered the live Adventure page in the in-app browser
+  at desktop/dark, mobile/dark, and mobile/light sizes.
+- The live Home and The Adventure menu links navigated in both directions, the
+  theme control switched state, and the browser console remained empty.
+- Ordinary command-line TLS and HTTP readback passed for both custom domains.
+  The in-app browser still resolved the apex to a stale certificate path during
+  the visual check, so visual proof used the stable Worker URL without
+  weakening TLS validation.
 
 ## Shared account decisions
 
@@ -155,8 +171,11 @@ expiring:
 - Mock/Fixture Usage: none for hosted proof; local tests use controlled Worker
   request objects and local static assets.
 - Production Validation Status: the existing Worker fallback and exact Custom
-  Domains remain verified against the active Cloudflare edge. The new
-  Adventure route is locally validated and awaits deployment/readback.
+  Domains returned the deployed Adventure release with HTTP 200 and the
+  expected security headers. The stable Worker URL also passed real-browser
+  desktop/mobile, theme, navigation, and console readback. The in-app browser's
+  apex resolver still showed the known stale-certificate path even though
+  ordinary TLS/HTTP readback passed.
 - Localhost Validation Integrity: real local Worker runtime, not a production
   sign-off substitute.
 - Warning/Issue Triage: the production static-header gap was `fixed_now`; the
@@ -176,7 +195,9 @@ expiring:
 - Repository handoff-pointer refresh: `086d3e6`.
 - Custom Domain configuration, regression test, deployment evidence, and
   cutover documentation: `8da0e13`.
+- Adventure journal, shared navigation, responsive styling, source contracts,
+  and Playwright coverage: `92db224`.
 - These evidence commits were pushed to
   `https://github.com/ownasquare/ownasquare`.
 - The final documentation-only closeout commit follows these evidence commits;
-  no product code changed after the fully validated `8da0e13` deployment.
+  no product code changed after the fully validated `92db224` deployment.

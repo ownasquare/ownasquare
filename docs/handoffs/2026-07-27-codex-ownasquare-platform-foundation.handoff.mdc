@@ -17,6 +17,11 @@ Current product/provider evidence:
 - Production hardening and provider documentation commit: `85a5e74`
 - Pre-cutover completion-evidence commit: `378a164`
 - Custom Domain deployment and evidence commit: `8da0e13`
+- Adventure journal, shared navigation, and validation commit: `92db224`
 - Current provider state: Cloudflare zone active; exact apex and `www` Custom
   Domains deployed; authoritative DNS, valid TLS, homepage, health, headers,
   desktop/light, and mobile/dark rendering verified.
+- Current Adventure state: `/adventure/` is deployed on the stable Worker URL,
+  apex, and `www`; desktop/mobile, light/dark, navigation, security headers, and
+  console readback passed. Five chapters remain truthfully labeled
+  `Recording soon` until real media is supplied.
