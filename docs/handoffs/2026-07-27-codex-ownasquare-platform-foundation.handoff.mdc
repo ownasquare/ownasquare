@@ -16,6 +16,7 @@ Current product/provider evidence:
 - Initial implementation commit: `4758254`
 - Production hardening and provider documentation commit: `85a5e74`
 - Pre-cutover completion-evidence commit: `378a164`
+- Custom Domain deployment and evidence commit: `8da0e13`
 - Current provider state: Cloudflare zone active; exact apex and `www` Custom
   Domains deployed; authoritative DNS, valid TLS, homepage, health, headers,
   desktop/light, and mobile/dark rendering verified.

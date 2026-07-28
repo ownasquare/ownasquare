@@ -148,7 +148,9 @@ expiring:
 - Product hardening, regression test, and provider documentation:
   `85a5e74`.
 - Repository handoff-pointer refresh: `086d3e6`.
-- Both commits were pushed to
+- Custom Domain configuration, regression test, deployment evidence, and
+  cutover documentation: `8da0e13`.
+- These evidence commits were pushed to
   `https://github.com/ownasquare/ownasquare`.
 - The final documentation-only closeout commit follows these evidence commits;
-  no product code changed after the fully validated `85a5e74` deployment.
+  no product code changed after the fully validated `8da0e13` deployment.
