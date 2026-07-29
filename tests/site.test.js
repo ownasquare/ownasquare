@@ -32,6 +32,36 @@ test("homepage links to the founder adventure", async () => {
   assert.match(html, />The Adventure</);
 });
 
+test("public pages link to the app library", async () => {
+  const homepage = await readFile(new URL("index.html", siteRoot), "utf8");
+  const adventure = await readFile(
+    new URL("adventure/index.html", siteRoot),
+    "utf8",
+  );
+
+  assert.match(homepage, /href="\/apps\/"/);
+  assert.match(adventure, /href="\/apps\/"/);
+});
+
+test("app library exposes verified hosted previews and public source", async () => {
+  const html = await readFile(new URL("apps/index.html", siteRoot), "utf8");
+
+  for (const slug of [
+    "unitpath-coach",
+    "split-ticket-rescue",
+    "move-thesis",
+  ]) {
+    assert.match(html, new RegExp(`https://${slug}\\.ownasquare\\.com`));
+    assert.match(
+      html,
+      new RegExp(`https://github\\.com/ownasquare/${slug}`),
+    );
+  }
+
+  assert.match(html, /Public preview/);
+  assert.match(html, /Production certification is still in progress/);
+});
+
 test("adventure page tells the useful-app story without inventing published videos", async () => {
   const html = await readFile(
     new URL("adventure/index.html", siteRoot),

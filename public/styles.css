@@ -211,7 +211,9 @@ main {
 .theme-toggle:focus-visible,
 .primary-action:focus-visible,
 .nav-tab:focus-visible,
-.brand:focus-visible {
+.brand:focus-visible,
+.library-action:focus-visible,
+.launch-note a:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 4px;
 }
@@ -319,6 +321,198 @@ h1 {
   margin: 1rem 0 0;
   color: var(--muted);
   font-size: 0.83rem;
+}
+
+.launch-note a {
+  color: var(--ink);
+  font-weight: 760;
+  text-underline-offset: 0.22em;
+}
+
+.library-hero {
+  display: grid;
+  gap: 2.5rem;
+  padding: 5rem 0 4rem;
+}
+
+.library-hero h1 {
+  max-width: 11ch;
+}
+
+.library-intro {
+  align-self: end;
+}
+
+.library-intro > p:first-child {
+  max-width: 38rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(1.08rem, 3vw, 1.3rem);
+}
+
+.library-proof-note {
+  max-width: 38rem;
+  margin: 1.5rem 0 0;
+  padding: 1rem 1.1rem;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+  font-size: 0.82rem;
+}
+
+.library-section {
+  padding: 5rem 0 6rem;
+  border-top: 1px solid var(--line);
+}
+
+.library-section-heading {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.library-section-heading > p {
+  max-width: 35rem;
+  margin: 0;
+  color: var(--muted);
+}
+
+.library-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.library-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 31rem;
+  padding: clamp(1.35rem, 4vw, 2rem);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-medium);
+}
+
+.library-card-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.library-mark {
+  display: grid;
+  place-items: center;
+  width: 3.2rem;
+  aspect-ratio: 1;
+  color: #15160f;
+  background: var(--lime);
+  border-radius: 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 850;
+  letter-spacing: -0.03em;
+}
+
+.library-card-travel .library-mark {
+  background: var(--accent);
+}
+
+.library-card-decisions .library-mark {
+  background: color-mix(in srgb, #7aa7ff 68%, var(--surface));
+}
+
+.preview-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 760;
+}
+
+.preview-status i {
+  width: 0.48rem;
+  aspect-ratio: 1;
+  background: var(--lime);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--lime) 18%, transparent);
+}
+
+.library-card .card-label {
+  margin-top: 2.4rem;
+}
+
+.library-card h3 {
+  max-width: 12ch;
+  margin: 0;
+  font-size: clamp(2.15rem, 7vw, 3.35rem);
+  letter-spacing: -0.06em;
+  line-height: 0.96;
+}
+
+.library-card-summary {
+  margin: 1.35rem 0 0;
+  color: var(--muted);
+}
+
+.library-boundary {
+  margin: 1.5rem 0 2rem;
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 720;
+}
+
+.library-actions {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: auto;
+}
+
+.library-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.35rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-small);
+  font-size: 0.84rem;
+  font-weight: 760;
+  text-decoration: none;
+}
+
+.library-action-primary {
+  color: var(--background);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.library-action:hover {
+  transform: translateY(-2px);
+}
+
+.library-promise {
+  margin-bottom: 4rem;
+  padding: clamp(2rem, 6vw, 4rem);
+  color: #15160f;
+  background: var(--lime);
+  border-radius: var(--radius-large);
+}
+
+.library-promise .eyebrow,
+.library-promise > p:last-child {
+  color: rgba(21, 22, 15, 0.72);
+}
+
+.library-promise h2 {
+  max-width: 16ch;
+}
+
+.library-promise > p:last-child {
+  max-width: 42rem;
+  margin: 1.35rem 0 0;
+  font-size: 1.05rem;
 }
 
 .story-hero {
@@ -929,6 +1123,16 @@ code {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .library-hero,
+  .library-section-heading {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.72fr);
+    align-items: end;
+  }
+
+  .library-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .journal-heading {
     grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
     align-items: end;
@@ -972,6 +1176,10 @@ code {
     min-height: 34rem;
   }
 
+  .library-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .story-hero {
     grid-template-columns: minmax(0, 1.25fr) minmax(22rem, 0.75fr);
     align-items: end;
@@ -994,6 +1202,7 @@ code {
 @media (prefers-reduced-motion: no-preference) {
   .theme-toggle,
   .primary-action,
+  .library-action,
   .nav-tab,
   .skip-link {
     transition:

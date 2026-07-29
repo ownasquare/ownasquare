@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Explore OwnASquare public app previews and the open-source GitHub repository behind each focused tool."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f4f1e8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#11120f" media="(prefers-color-scheme: dark)" />
+    <title>App Library — Hosted and Open Source | OwnASquare</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script>
+      try {
+        const savedTheme = localStorage.getItem("ownasquare-theme");
+        if (savedTheme === "light" || savedTheme === "dark") {
+          document.documentElement.dataset.theme = savedTheme;
+        }
+      } catch {}
+    </script>
+    <script src="/app.js" type="module"></script>
+  </head>
+  <body class="library-page">
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="OwnASquare home">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <span>OwnASquare</span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary">
+        <a class="nav-tab" href="/">Home</a>
+        <a class="nav-tab" href="/apps/" aria-current="page">Apps</a>
+        <a class="nav-tab" href="/adventure/">The Adventure</a>
+      </nav>
+
+      <button
+        class="theme-toggle"
+        type="button"
+        aria-label="Switch color theme"
+        aria-pressed="false"
+        data-theme-toggle
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path
+            d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"
+          />
+        </svg>
+        <span data-theme-label>Theme</span>
+      </button>
+    </header>
+
+    <main id="main">
+      <section class="library-hero" aria-labelledby="library-title">
+        <div>
+          <p class="eyebrow">
+            <span class="status-dot" aria-hidden="true"></span>
+            The public library is open
+          </p>
+          <h1 id="library-title">Small tools.<br />Ready to try.</h1>
+        </div>
+        <div class="library-intro">
+          <p>
+            Open a hosted preview and get straight to the useful part, or inspect
+            the same app’s public source and run it your way.
+          </p>
+          <p class="library-proof-note">
+            Each preview loaded from its public OwnASquare address on July 28,
+            2026. Production certification is still in progress.
+          </p>
+        </div>
+      </section>
+
+      <section class="library-section" aria-labelledby="available-title">
+        <div class="library-section-heading">
+          <div>
+            <p class="eyebrow">Available now</p>
+            <h2 id="available-title">Three focused public previews.</h2>
+          </div>
+          <p>
+            No account is required for these previews. Do not paste names,
+            account details, booking codes, or other sensitive information.
+          </p>
+        </div>
+
+        <div class="library-grid">
+          <article class="library-card library-card-education">
+            <div class="library-card-topline">
+              <span class="library-mark" aria-hidden="true">U↗</span>
+              <span class="preview-status"><i aria-hidden="true"></i>Public preview</span>
+            </div>
+            <p class="card-label">Chemistry learning</p>
+            <h3>UnitPath Coach</h3>
+            <p class="library-card-summary">
+              Find the first broken step in a chemistry factor chain and get a
+              nearby example without handing over the answer.
+            </p>
+            <p class="library-boundary">No login · Nothing saved · Your answer stays yours</p>
+            <div class="library-actions">
+              <a
+                class="library-action library-action-primary"
+                href="https://unitpath-coach.ownasquare.com"
+                >Open UnitPath Coach <span aria-hidden="true">↗</span></a
+              >
+              <a
+                class="library-action"
+                href="https://github.com/ownasquare/unitpath-coach"
+                target="_blank"
+                rel="noreferrer"
+                >View UnitPath Coach source <span aria-hidden="true">↗</span></a
+              >
+            </div>
+          </article>
+
+          <article class="library-card library-card-travel">
+            <div class="library-card-topline">
+              <span class="library-mark" aria-hidden="true">S↗</span>
+              <span class="preview-status"><i aria-hidden="true"></i>Public preview</span>
+            </div>
+            <p class="card-label">Travel disruption</p>
+            <h3>Split Ticket Rescue</h3>
+            <p class="library-card-summary">
+              Turn one delay or cancellation notice and a separate onward
+              ticket into a source-grounded recovery plan.
+            </p>
+            <p class="library-boundary">Decision support · No booking · Confirm with providers</p>
+            <div class="library-actions">
+              <a
+                class="library-action library-action-primary"
+                href="https://split-ticket-rescue.ownasquare.com"
+                >Open Split Ticket Rescue <span aria-hidden="true">↗</span></a
+              >
+              <a
+                class="library-action"
+                href="https://github.com/ownasquare/split-ticket-rescue"
+                target="_blank"
+                rel="noreferrer"
+                >View Split Ticket Rescue source <span aria-hidden="true">↗</span></a
+              >
+            </div>
+          </article>
+
+          <article class="library-card library-card-decisions">
+            <div class="library-card-topline">
+              <span class="library-mark" aria-hidden="true">MT</span>
+              <span class="preview-status"><i aria-hidden="true"></i>Public preview</span>
+            </div>
+            <p class="card-label">Relocation decisions</p>
+            <h3>Move Thesis</h3>
+            <p class="library-card-summary">
+              Pressure-test one relocation idea through its assumptions,
+              countercase, failure modes, and smallest useful experiment.
+            </p>
+            <p class="library-boundary">One idea in · One experiment out · No login</p>
+            <div class="library-actions">
+              <a
+                class="library-action library-action-primary"
+                href="https://move-thesis.ownasquare.com"
+                >Open Move Thesis <span aria-hidden="true">↗</span></a
+              >
+              <a
+                class="library-action"
+                href="https://github.com/ownasquare/move-thesis"
+                target="_blank"
+                rel="noreferrer"
+                >View Move Thesis source <span aria-hidden="true">↗</span></a
+              >
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="library-promise" aria-labelledby="library-promise-title">
+        <p class="eyebrow">One promise across every app</p>
+        <h2 id="library-promise-title">The shortest clear path to a useful result.</h2>
+        <p>
+          Each tool stays narrow on purpose. Use the hosted preview for
+          convenience, or keep the open-source core and control the stack.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand footer-brand" href="/" aria-label="OwnASquare home">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <span>OwnASquare</span>
+      </a>
+      <p>Focused software, made approachable.</p>
+      <p>&copy; <span data-year></span> OwnASquare.</p>
+    </footer>
+  </body>
+</html>

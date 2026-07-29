@@ -78,6 +78,62 @@ test("the adventure page shares the same theme control", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 });
 
+test("the app library connects each public preview to its source", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: "Apps" }).click();
+
+  await expect(page).toHaveURL(/\/apps\/$/);
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: "Small tools. Ready to try.",
+    }),
+  ).toBeVisible();
+  await expect(page.locator(".library-card")).toHaveCount(3);
+
+  const links = [
+    {
+      name: "Open UnitPath Coach",
+      href: "https://unitpath-coach.ownasquare.com",
+    },
+    {
+      name: "View UnitPath Coach source",
+      href: "https://github.com/ownasquare/unitpath-coach",
+    },
+    {
+      name: "Open Split Ticket Rescue",
+      href: "https://split-ticket-rescue.ownasquare.com",
+    },
+    {
+      name: "View Split Ticket Rescue source",
+      href: "https://github.com/ownasquare/split-ticket-rescue",
+    },
+    {
+      name: "Open Move Thesis",
+      href: "https://move-thesis.ownasquare.com",
+    },
+    {
+      name: "View Move Thesis source",
+      href: "https://github.com/ownasquare/move-thesis",
+    },
+  ];
+
+  for (const link of links) {
+    await expect(page.getByRole("link", { name: link.name })).toHaveAttribute(
+      "href",
+      link.href,
+    );
+  }
+
+  const pageWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = page.viewportSize()?.width;
+  expect(pageWidth).toBeLessThanOrEqual(viewportWidth ?? pageWidth);
+});
+
 test("hosted-plan copy keeps readable contrast in dark mode", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("/");
