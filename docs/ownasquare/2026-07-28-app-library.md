@@ -142,3 +142,99 @@ restored as the default immediately afterward.
 No app Worker, app Custom Domain, DNS record, central publisher, release-state
 helper, pending receipt, or app-level hosted certification was changed. The
 three app entries therefore remain accurately labeled `Public preview`.
+
+## Filterable catalog expansion
+
+The library was expanded later on July 28 from three featured previews to a
+reviewed catalog snapshot of all 50 public OwnASquare app repositories. The
+parent repository and an unrelated technical-challenge repository were excluded
+from the app inventory.
+
+The catalog now provides:
+
+- a desktop left-side filter panel and a collapsible mobile filter panel;
+- 23 normalized category options, with multi-select support;
+- Personal, Education, and Business use-case filters;
+- Simple (about 2 clicks), Moderate (about 5 clicks), and Full dashboard
+  interaction-shape filters;
+- Public preview and Source only availability filters;
+- a disabled Popular demand option with a zero count and explanatory copy;
+- a responsive card for every app, including an explicit
+  `Hosted preview not available` state for source-only apps; and
+- a clear action, live result count, selected-filter count, and no-results
+  state.
+
+Selections are ORed within one filter group and ANDed across different groups.
+The simplicity labels are reviewed interaction-shape classifications, not
+universal measured click counts.
+
+Exactly three cards retain their independently verified public-preview links:
+UnitPath Coach, Split Ticket Rescue, and Move Thesis. The remaining 47 cards
+link only to their public GitHub repositories. No verified request-total source
+exists yet, so no app is labeled as popular demand and that filter cannot be
+selected.
+
+### Expanded implementation
+
+- `public/apps/catalog-data.js`: 50 reviewed catalog records and normalized
+  classification data.
+- `public/apps/catalog.js`: pure filter semantics plus safe DOM rendering and
+  mobile control behavior.
+- `public/apps/index.html`: catalog structure, filter groups, availability
+  explanation, and no-JavaScript fallback.
+- `public/styles.css`: sticky desktop filter panel, responsive cards, mobile
+  controls, and complete interaction/theme states.
+- `tests/site.test.js`: catalog data-contract, URL, classification, preview
+  count, demand-state, and filter-semantics coverage.
+- `tests/e2e/home.spec.js`: initial catalog, representative links, compound
+  filtering, clear/empty states, and mobile-panel coverage.
+- `docs/superpowers/plans/2026-07-28-filterable-app-catalog.md`: TDD
+  implementation and release plan.
+
+### Expanded validation and release
+
+`npm run check` passed after the expansion:
+
+- 15 Node tests passed;
+- 24 Playwright E2E checks passed across phone, tablet, and desktop;
+- Wrangler deployment dry-run read 10 assets successfully.
+
+Local browser QA additionally caught and resolved two issues before release:
+
+- separate internal Privacy and Security keys produced one duplicate-facing
+  label, so they were normalized to one category; and
+- the selected-filter count remained visible at zero because a catalog display
+  rule overrode the HTML `hidden` state, so an explicit hidden-state rule was
+  added.
+
+The expanded source was published in commit `307b273` and deployed as parent
+Worker version `4bb02eaa-3e1a-4bec-8a14-7751a2df1c85`. Only the
+`ownasquare-platform` Worker was deployed.
+
+Production readback at <https://ownasquare.com/apps/> confirmed:
+
+- the apex and stable Worker routes returned the same new HTML ETag;
+- HTTP 200 and the existing HSTS, CSP, frame, content-type, referrer,
+  permissions, and cross-origin opener protections;
+- 50 rendered cards, 23 category filters, three public-preview cards, and 47
+  source-only cards;
+- Popular demand remained disabled at zero pending verified request totals;
+- Education + Personal + Simple narrowed the list to UnitPath Coach;
+- clearing filters restored all 50 cards;
+- the canonical route loaded the catalog module after an initial stale Chrome
+  cache read;
+- desktop and 375-pixel mobile layouts had no horizontal overflow;
+- the mobile filter panel expanded correctly and the light/dark theme control
+  preserved its accessible label; and
+- all three preview roots plus representative GitHub source links returned
+  HTTP 200.
+
+The initial Chrome navigation immediately after deployment showed the old
+three-card asset. Read-only HTTP checks then showed the new apex and
+`workers.dev` HTML with a matching ETag and cache miss; a cache-busted browser
+navigation loaded the new catalog, and a later navigation to the canonical URL
+also loaded all 50 cards. No broad cache purge was required.
+
+This catalog expansion does not alter or supersede any individual app Worker,
+Custom Domain, DNS record, release receipt, central publisher/state helper, or
+frozen app-level certification.
