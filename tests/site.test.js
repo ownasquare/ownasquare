@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { catalogApps } from "../public/apps/catalog-data.js";
+import { filterCatalog } from "../public/apps/catalog.js";
 
 const siteRoot = new URL("../public/", import.meta.url);
 const wranglerConfig = new URL("../wrangler.jsonc", import.meta.url);
@@ -43,23 +45,86 @@ test("public pages link to the app library", async () => {
   assert.match(adventure, /href="\/apps\/"/);
 });
 
-test("app library exposes verified hosted previews and public source", async () => {
+test("app library exposes a filterable catalog shell", async () => {
   const html = await readFile(new URL("apps/index.html", siteRoot), "utf8");
 
-  for (const slug of [
-    "unitpath-coach",
-    "split-ticket-rescue",
-    "move-thesis",
-  ]) {
-    assert.match(html, new RegExp(`https://${slug}\\.ownasquare\\.com`));
-    assert.match(
-      html,
-      new RegExp(`https://github\\.com/ownasquare/${slug}`),
+  assert.match(html, /data-filter-group="category"/);
+  assert.match(html, /data-filter-group="useCases"/);
+  assert.match(html, /data-filter-group="simplicity"/);
+  assert.match(html, /data-filter-group="availability"/);
+  assert.match(html, /data-catalog-grid/);
+  assert.match(html, /data-result-count/);
+  assert.match(html, /data-clear-filters/);
+  assert.match(html, /catalog\.js/);
+  assert.match(html, /Production\s+certification is still in progress/);
+});
+
+test("catalog contains every reviewed public app with truthful availability", () => {
+  assert.equal(catalogApps.length, 50);
+  assert.equal(new Set(catalogApps.map(({ slug }) => slug)).size, 50);
+  assert.equal(new Set(catalogApps.map(({ name }) => name)).size, 50);
+
+  const allowedUseCases = new Set(["personal", "education", "business"]);
+  const allowedSimplicity = new Set(["simple", "moderate", "dashboard"]);
+  const allowedAvailability = new Set(["preview", "source"]);
+
+  for (const app of catalogApps) {
+    assert.equal(
+      app.sourceUrl,
+      `https://github.com/ownasquare/${app.slug}`,
     );
+    assert.ok(app.category);
+    assert.ok(app.categoryLabel);
+    assert.ok(app.useCases.length > 0);
+    assert.ok(app.useCases.every((useCase) => allowedUseCases.has(useCase)));
+    assert.ok(allowedSimplicity.has(app.simplicity));
+    assert.ok(allowedAvailability.has(app.availability));
+    assert.equal(app.popularDemand, false);
+
+    if (app.availability === "preview") {
+      assert.equal(app.previewUrl, `https://${app.slug}.ownasquare.com`);
+    } else {
+      assert.equal(app.previewUrl, null);
+    }
   }
 
-  assert.match(html, /Public preview/);
-  assert.match(html, /Production certification is still in progress/);
+  assert.deepEqual(
+    catalogApps
+      .filter(({ availability }) => availability === "preview")
+      .map(({ slug }) => slug)
+      .sort(),
+    ["move-thesis", "split-ticket-rescue", "unitpath-coach"],
+  );
+});
+
+test("catalog filters use OR within groups and AND across groups", () => {
+  const result = filterCatalog(catalogApps, {
+    categories: new Set(["education", "travel"]),
+    useCases: new Set(["personal"]),
+    simplicity: new Set(["simple"]),
+    availability: new Set(),
+  });
+
+  assert.ok(result.some(({ slug }) => slug === "unitpath-coach"));
+  assert.ok(result.some(({ slug }) => slug === "split-ticket-rescue"));
+  assert.ok(
+    result.every(
+      (app) =>
+        ["education", "travel"].includes(app.category) &&
+        app.useCases.includes("personal") &&
+        app.simplicity === "simple",
+    ),
+  );
+
+  assert.equal(
+    filterCatalog(catalogApps, {
+      categories: new Set(["finance"]),
+      useCases: new Set(["education"]),
+      simplicity: new Set(["simple"]),
+      availability: new Set(),
+    }).length,
+    0,
+  );
 });
 
 test("adventure page tells the useful-app story without inventing published videos", async () => {

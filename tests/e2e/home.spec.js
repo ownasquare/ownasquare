@@ -78,7 +78,7 @@ test("the adventure page shares the same theme control", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 });
 
-test("the app library connects each public preview to its source", async ({
+test("the app catalog connects public previews and source-only apps", async ({
   page,
 }) => {
   await page.goto("/");
@@ -91,7 +91,8 @@ test("the app library connects each public preview to its source", async ({
       name: "Small tools. Ready to try.",
     }),
   ).toBeVisible();
-  await expect(page.locator(".library-card")).toHaveCount(3);
+  await expect(page.locator(".catalog-card")).toHaveCount(50);
+  await expect(page.locator("[data-result-count]")).toHaveText("50 apps");
 
   const links = [
     {
@@ -127,11 +128,71 @@ test("the app library connects each public preview to its source", async ({
     );
   }
 
+  await expect(
+    page.getByRole("link", { name: "View Laundry Odor Triage source" }),
+  ).toHaveAttribute(
+    "href",
+    "https://github.com/ownasquare/laundry-odor-triage",
+  );
+  await expect(
+    page.getByLabel("Laundry Odor Triage hosted preview not available"),
+  ).toBeVisible();
+  await expect(
+    page.locator('input[data-filter="availability"][value="popular"]'),
+  ).toBeDisabled();
+
   const pageWidth = await page.evaluate(
     () => document.documentElement.scrollWidth,
   );
   const viewportWidth = page.viewportSize()?.width;
   expect(pageWidth).toBeLessThanOrEqual(viewportWidth ?? pageWidth);
+});
+
+test("catalog filters combine across groups and clear cleanly", async ({
+  page,
+}) => {
+  await page.goto("/apps/");
+
+  if ((page.viewportSize()?.width ?? 0) < 1024) {
+    const filterToggle = page.locator("[data-filter-toggle]");
+    await expect(filterToggle).toHaveAttribute("aria-expanded", "false");
+    await filterToggle.click();
+    await expect(filterToggle).toHaveAttribute("aria-expanded", "true");
+  }
+
+  await page
+    .locator('input[data-filter="categories"][value="education"]')
+    .check();
+  await page.locator('input[data-filter="useCases"][value="personal"]').check();
+  await page.locator('input[data-filter="simplicity"][value="simple"]').check();
+
+  await expect(page.locator("[data-result-count]")).toHaveText("1 app");
+  await expect(page.locator(".catalog-card")).toHaveCount(1);
+  await expect(
+    page.getByRole("heading", { level: 3, name: "UnitPath Coach" }),
+  ).toBeVisible();
+
+  await page.getByRole("button", { name: "Clear filters" }).click();
+  await expect(page.locator("[data-result-count]")).toHaveText("50 apps");
+  await expect(page.locator(".catalog-card")).toHaveCount(50);
+
+  await page.locator('input[data-filter="categories"][value="finance"]').check();
+  await page.locator('input[data-filter="useCases"][value="education"]').check();
+  await page.locator('input[data-filter="simplicity"][value="simple"]').check();
+
+  await expect(page.locator("[data-result-count]")).toHaveText("0 apps");
+  await expect(
+    page.getByRole("heading", {
+      level: 3,
+      name: "No apps match this combination yet.",
+    }),
+  ).toBeVisible();
+
+  await page
+    .locator("[data-empty-state]")
+    .getByRole("button", { name: "Clear filters" })
+    .click();
+  await expect(page.locator("[data-result-count]")).toHaveText("50 apps");
 });
 
 test("hosted-plan copy keeps readable contrast in dark mode", async ({ page }) => {
