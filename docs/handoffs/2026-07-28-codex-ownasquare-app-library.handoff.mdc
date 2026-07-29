@@ -1,0 +1,21 @@
+---
+description: Pointer to the cross-workspace OwnASquare app-library release continuation package.
+alwaysApply: false
+---
+
+# OwnASquare App Library Handoff Pointer
+
+Canonical handoff:
+
+`/Users/fortunevieyra/Documents/Github/beladed.com/docs/handoffs/2026-07-28-codex-ownasquare-app-library.handoff.mdc`
+
+Current release evidence:
+
+- Source commit: `2c7d6512660ef08aebc83d726cc033e25decef6a`
+- GitHub: `https://github.com/ownasquare/ownasquare`
+- Public library: `https://ownasquare.com/apps/`
+- Parent Worker version: `10a4377d-ae81-4e19-8ffa-04ba89c8453b`
+- Three public preview cards and all six hosted/source links read back.
+- Desktop dark, mobile light, theme state, security headers, empty console, and
+  no mobile overflow were verified.
+- Individual app certification remains frozen and was not changed.

@@ -104,7 +104,41 @@ proof, or commercial proof.
 
 ## Release status
 
-The parent-site source is locally validated. Public deployment and public
-`/apps/` readback are the next release steps; no app Worker, Custom Domain, DNS
-record, credential, or central hosted-release record was changed during the
-library implementation.
+The parent-site library is publicly released:
+
+- app-library source commit:
+  `2c7d6512660ef08aebc83d726cc033e25decef6a`;
+- GitHub `origin/main` read back at that exact commit after publication;
+- Cloudflare parent Worker version:
+  `10a4377d-ae81-4e19-8ffa-04ba89c8453b`;
+- stable Worker route:
+  <https://ownasquare-platform.ownasquare-com.workers.dev>;
+- public library:
+  <https://ownasquare.com/apps/>.
+
+The deployment used the existing named `ownasquare` Wrangler profile. A stale
+shell-level Cloudflare account override initially pointed a read-only query at
+the Beladed account; that query failed closed before mutation. The release
+invocation explicitly removed only that override and then read back the
+OwnASquare account, existing parent deployment history, and new version.
+
+Production `/apps/` validation confirmed:
+
+- HTTP 200 at the apex route;
+- all expected security headers, including HSTS, CSP, frame denial, content-type
+  protection, referrer policy, permissions policy, and cross-origin opener
+  policy;
+- three rendered library cards and six exact hosted/source destinations;
+- desktop dark and mobile light layouts;
+- a working theme switch with updated accessible state;
+- no horizontal overflow at the mobile viewport;
+- no warning or error entries in the inspected browser console.
+
+The terminal initially selected the stored `beladed-sites` GitHub identity, so
+the first push was correctly rejected. The already stored `ownasquare` identity
+was selected temporarily, the exact commit was pushed, and `beladed-sites` was
+restored as the default immediately afterward.
+
+No app Worker, app Custom Domain, DNS record, central publisher, release-state
+helper, pending receipt, or app-level hosted certification was changed. The
+three app entries therefore remain accurately labeled `Public preview`.
