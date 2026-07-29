@@ -238,3 +238,39 @@ also loaded all 50 cards. No broad cache purge was required.
 This catalog expansion does not alter or supersede any individual app Worker,
 Custom Domain, DNS record, release receipt, central publisher/state helper, or
 frozen app-level certification.
+
+## July 29 hosted-preview fleet continuation
+
+The requested next phase is to give the 47 source-only catalog entries a
+public preview where their real runtime can be hosted safely, and a truthful
+demonstration surface where the original runtime cannot run on Cloudflare.
+No app deployment was started during the initial continuation audit because
+two release prerequisites failed closed before provider mutation:
+
+- the current central publisher still reports
+  `ACTIVE_RELEASE_ATTESTATION_CONTRACT_VERSION=0` while deploy and finalize
+  require version `1`; and
+- the current default Wrangler identity readback resolved to the Beladed
+  account, not an independently verified OwnASquare account identity.
+
+The Lane 31 guard returned a fresh `decision=allow`, after which its canonical
+state, handoff, queue, and release-helper evidence were read. Lane 31 remains
+bound to Coverage Letter Map generation 1 at public GitHub SHA
+`51b644e1a76490f9eade7e0106b98287d37d47c1`, with hosting false and an explicit
+instruction not to deploy until the centrally released contract-v1 receipt
+exists. Current publisher source independently confirmed the contract
+constants remain `0` and `1`, and that `deploy_release` and
+`finalize_release` invoke the gate before their execution locks.
+
+Wrangler `4.114.0` is installed. A read-only Pages project listing through the
+named profile returned no project rows, but that observation is not treated as
+an OwnASquare provider inventory because the provider identity was not
+independently proved.
+
+The implementation sequence and exact preservation rules are documented in
+`docs/superpowers/plans/2026-07-29-hosted-preview-fleet.md`. The immediate
+required decision is whether to authorize a separately owned central
+release-runtime repair and OwnASquare reauthentication window. Until that
+authority exists, no app repository, Worker, Pages project, Custom Domain,
+DNS record, immutable receipt, central state, or catalog availability flag may
+be mutated for this phase.
