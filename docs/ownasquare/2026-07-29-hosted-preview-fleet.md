@@ -2,6 +2,9 @@
 
 Date: 2026-07-29
 
+Implementation commit:
+`70e4dde062b1cd5a1914f1204b2eb52f1bb26e3f`
+
 ## Outcome
 
 OwnASquare now publishes an app library at

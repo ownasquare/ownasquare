@@ -156,6 +156,8 @@ the existing OwnASquare profile for this rollout.
 
 - Parent repository:
   `/Users/fortunevieyra/Documents/Github/ownasquare.com/ownasquare`
+- Implementation commit:
+  `70e4dde062b1cd5a1914f1204b2eb52f1bb26e3f`
 - Catalog: 50 records, 50 hosted-preview links, 50 GitHub source links.
 - Public library: `https://ownasquare.com/apps/`
 - Canonical preview pattern: `https://<slug>.ownasquare.com`
