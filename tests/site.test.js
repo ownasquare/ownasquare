@@ -56,7 +56,10 @@ test("app library exposes a filterable catalog shell", async () => {
   assert.match(html, /data-result-count/);
   assert.match(html, /data-clear-filters/);
   assert.match(html, /catalog\.js/);
-  assert.match(html, /Production\s+certification is still in progress/);
+  assert.match(
+    html,
+    /Production\s+certification\s+is still in progress/,
+  );
 });
 
 test("catalog contains every reviewed public app with truthful availability", () => {
@@ -82,18 +85,26 @@ test("catalog contains every reviewed public app with truthful availability", ()
     assert.equal(app.popularDemand, false);
 
     if (app.availability === "preview") {
-      assert.equal(app.previewUrl, `https://${app.slug}.ownasquare.com`);
+      assert.equal(
+        app.previewUrl,
+        app.slug === "context-loom"
+          ? "https://context-loom.ownasquare.com/?demo=1"
+          : `https://${app.slug}.ownasquare.com`,
+      );
     } else {
       assert.equal(app.previewUrl, null);
     }
   }
 
-  assert.deepEqual(
-    catalogApps
-      .filter(({ availability }) => availability === "preview")
-      .map(({ slug }) => slug)
-      .sort(),
-    ["move-thesis", "split-ticket-rescue", "unitpath-coach"],
+  assert.equal(
+    catalogApps.filter(({ availability }) => availability === "preview")
+      .length,
+    50,
+  );
+  assert.equal(
+    catalogApps.filter(({ availability }) => availability === "source")
+      .length,
+    0,
   );
 });
 

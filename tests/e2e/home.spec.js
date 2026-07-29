@@ -78,7 +78,7 @@ test("the adventure page shares the same theme control", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
 });
 
-test("the app catalog connects public previews and source-only apps", async ({
+test("the app catalog connects public previews and open source apps", async ({
   page,
 }) => {
   await page.goto("/");
@@ -135,8 +135,15 @@ test("the app catalog connects public previews and source-only apps", async ({
     "https://github.com/ownasquare/laundry-odor-triage",
   );
   await expect(
-    page.getByLabel("Laundry Odor Triage hosted preview not available"),
-  ).toBeVisible();
+    page.getByRole("link", { name: "Open Laundry Odor Triage" }),
+  ).toHaveAttribute(
+    "href",
+    "https://laundry-odor-triage.ownasquare.com",
+  );
+  await expect(page.locator(".catalog-status-preview")).toHaveCount(50);
+  await expect(
+    page.locator('input[data-filter="availability"][value="source"]'),
+  ).toBeDisabled();
   await expect(
     page.locator('input[data-filter="availability"][value="popular"]'),
   ).toBeDisabled();

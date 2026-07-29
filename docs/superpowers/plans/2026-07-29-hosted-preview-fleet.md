@@ -10,7 +10,32 @@
 
 ---
 
-## Current hard stop
+## Execution outcome (2026-07-29)
+
+The user explicitly authorized direct Wrangler CLI publication through the
+existing OwnASquare profile. The named profile was verified with read-only
+provider inventory before mutation, and the inherited account selector was
+removed from every command through the secret-safe launcher.
+
+The public-preview objective is now complete:
+
+- 50 of 50 catalog records have a live `https://<slug>.ownasquare.com`
+  preview that returns HTTP 200 HTML.
+- 50 of 50 catalog records have a public GitHub source URL that returns HTTP
+  200.
+- 34 apps expose their real static or client-side interface.
+- 16 server-, Python-, model-, provider-, or local-runtime products expose
+  clearly labeled read-only product tours. The tours do not claim to execute
+  the unsupported private runtime.
+- The parent catalog is deployed at `https://ownasquare.com/apps/` with
+  category, use-case, simplicity, and availability filters.
+
+The central immutable release-attestation contract described below remains a
+separate requirement for formal production certification and source-SHA/provider
+binding attestation. It is not the current truth for public preview
+availability after this user-authorized rollout.
+
+## Historical hard stop (superseded for this user-authorized preview rollout)
 
 Execution must not advance to app source inspection, release edits, provider
 preflight, deployment, or finalization until both conditions below are true:
@@ -26,6 +51,10 @@ The existing contract deliberately rejects `deploy` and `finalize` before
 their execution locks and before provider or lane-state mutation. This plan
 does not authorize changing that shared runtime, its mirrors, its watchers, or
 its contract version without the central owner's explicit release window.
+
+The remaining tasks in this plan are retained as historical context and future
+release-hardening work. They must not be read as a statement that the public
+preview fleet is currently unavailable.
 
 ### Task 1: Admit and verify the central release owner
 
@@ -332,4 +361,3 @@ checks, compound filters, mobile filters, themes, and production readback.
 
 Deploy only `ownasquare-platform`, then verify the apex and stable Worker
 routes at the same HTML ETag and expected card counts.
-

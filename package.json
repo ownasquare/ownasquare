@@ -7,6 +7,10 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
+    "deploy:previews": "node scripts/deploy-hosted-preview-batch.mjs",
+    "deploy:previews:remaining": "node scripts/deploy-remaining-previews.mjs",
+    "verify:previews": "node scripts/verify-preview-fleet.mjs",
+    "verify:sources": "node scripts/verify-source-links.mjs",
     "deploy:dry-run": "wrangler deploy --dry-run",
     "typegen": "wrangler types",
     "typegen:check": "wrangler types --check",

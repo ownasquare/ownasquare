@@ -6,7 +6,8 @@ const makeApp = ({
   categoryLabel,
   useCases,
   simplicity,
-  preview = false,
+  preview = true,
+  previewPath = "",
 }) =>
   Object.freeze({
     slug,
@@ -17,7 +18,9 @@ const makeApp = ({
     useCases: Object.freeze(useCases),
     simplicity,
     availability: preview ? "preview" : "source",
-    previewUrl: preview ? `https://${slug}.ownasquare.com` : null,
+    previewUrl: preview
+      ? `https://${slug}.ownasquare.com${previewPath}`
+      : null,
     sourceUrl: `https://github.com/ownasquare/${slug}`,
     popularDemand: false,
   });
@@ -425,6 +428,7 @@ export const catalogApps = Object.freeze([
     categoryLabel: "Developer tools",
     useCases: ["education", "business"],
     simplicity: "dashboard",
+    previewPath: "/?demo=1",
   }),
   makeApp({
     slug: "ticket-tune",

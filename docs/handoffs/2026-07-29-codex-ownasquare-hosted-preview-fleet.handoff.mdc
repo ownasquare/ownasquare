@@ -1,0 +1,363 @@
+---
+description: Completed OwnASquare 50-app hosted preview fleet and catalog continuation
+alwaysApply: false
+---
+
+# OwnASquare Hosted Preview Fleet — Completed Continuation Handoff
+
+## INVENTORY NEXT ITEMS
+
+Evidence scanned: parent catalog and tests, all deployment runners, live
+preview/source verification output, production Wrangler output, Chrome desktop
+and mobile QA, and the historical governed-release plan.
+
+### P1 — Add formal immutable production certification
+
+- **Who:** OwnASquare release owner and central publisher owner.
+- **What:** Bind each public preview to an exact source SHA, Worker version,
+  settings/bindings projection, traffic allocation, and immutable receipt.
+- **How discovered:** The public fleet and source URLs are verified, but the
+  current direct Wrangler rollout does not constitute the historical central
+  contract's complete provider attestation.
+- **Where:** Central publisher and app-factory release records under
+  `/Users/fortunevieyra/.codex`, plus each app repository and Cloudflare Worker.
+- **When:** Before describing a preview as formally production-certified.
+- **Detailed description:** Preserve the current public fleet while adding
+  exact source/provider evidence. This work must not rewrite the public
+  availability result or pretend certification is required for HTTP access.
+- **Acceptance criteria:**
+  - Exact public source SHA is recorded for every preview.
+  - Active Worker version, settings, bindings, routes, and traffic are read back.
+  - Immutable receipts pass chronology and semantic validation.
+  - Catalog certification metadata remains separate from availability.
+- **Definition of done:** Fifty provider/source tuples have independently
+  verifiable immutable receipts.
+- **Reason:** Direct deployment proved access, not the complete release contract.
+- **Priority:** P1.
+- **Why:** It closes the evidence gap without taking working previews offline.
+- **Regression prevention:** Fail closed on ambiguous SHA, route, binding, or
+  traffic evidence.
+- **Testing:** Publisher fixtures, provider readback, exact-SHA health, and
+  receipt chronology tests.
+- **Audit policies:** Secret safety, identity readback, state persistence,
+  release-proof separation, and no fabricated certification.
+- **Other considerations:** Do not expose account identifiers or tokens.
+
+### P1 — Decide which 16 tours should become full supported runtimes
+
+- **Who:** OwnASquare product owner with each app's runtime owner.
+- **What:** Replace selected read-only tours with deterministic interactive
+  demos or supported full hosted runtimes.
+- **How discovered:** Runtime classification identified 16 products that depend
+  on Python, local models, private providers, autonomous execution, or other
+  server-side capabilities unsuitable for a truthful static preview.
+- **Where:** The corresponding app repositories and preview Workers listed by
+  `scripts/deploy-remaining-previews.mjs`.
+- **When:** Per product priority and only after the hosted runtime has an
+  explicit security, data, cost, and reliability design.
+- **Detailed description:** Keep the visible tour label until real execution
+  is deployed and proven. A deterministic synthetic demo is acceptable when it
+  explains its simulation boundary; a fake provider or model response is not.
+- **Acceptance criteria:**
+  - Product-specific hosting choice is documented.
+  - Auth, data retention, secrets, cost limits, and failure behavior are defined.
+  - The preview label matches the actual runtime.
+  - GitHub source remains reachable.
+- **Definition of done:** Each selected app has either a proven full runtime or
+  an explicitly accepted tour/demo boundary.
+- **Reason:** Public preview availability and full product execution are
+  different product decisions.
+- **Priority:** P1.
+- **Why:** These apps provide more value when their core flow can run safely.
+- **Regression prevention:** UI assertions require the tour/demo/full-runtime
+  label to agree with deployment metadata.
+- **Testing:** Playwright workflow, provider failure, data isolation, security,
+  accessibility, responsive, and no-console-error suites.
+- **Audit policies:** Truthful capability labeling, least privilege, data
+  minimization, and evidence-qualified release claims.
+- **Other considerations:** Do not add paid-provider calls without budget and
+  abuse controls.
+
+### P2 — Add durable fleet health and isolated-config auditing
+
+- **Who:** OwnASquare platform maintainer.
+- **What:** Continuously verify every preview's canonical host, Worker routing,
+  source URL, and isolated deployment configuration.
+- **How discovered:** The first remaining-fleet run inherited the parent
+  Wrangler file and temporarily attached apex routes to four preview Workers.
+- **Where:** Parent scripts/tests, CI or scheduled monitor, and Cloudflare route
+  readback.
+- **When:** Before and after every fleet deployment, then on a bounded schedule.
+- **Detailed description:** Treat the generated per-app configuration as a
+  required release input and reject any preview config that contains apex,
+  `www`, an extra hostname, or an unexpected account selector.
+- **Acceptance criteria:**
+  - Every preview config contains exactly one canonical custom domain.
+  - Apex and `www` remain owned only by `ownasquare-platform`.
+  - Fifty preview URLs and fifty source URLs pass.
+  - A failed item stops the batch with a clear slug and command boundary.
+- **Definition of done:** Automated preflight and postflight catch route drift
+  before catalog promotion.
+- **Reason:** Wrangler searches parent directories for configuration unless an
+  explicit isolated file is passed.
+- **Priority:** P2.
+- **Why:** Route bleed can replace the main site even when app assets are valid.
+- **Regression prevention:** Keep `--config` mandatory and test generated
+  config contents.
+- **Testing:** Node contract tests, Wrangler dry run, provider route inventory,
+  and HTTP verification.
+- **Audit policies:** Narrow mutation scope, exact hostname ownership,
+  stop-on-first-failure, and production readback.
+- **Other considerations:** Keep `.preview-build/` ignored and reproducible.
+
+### P2 — Add visual regression and link monitoring
+
+- **Who:** OwnASquare frontend/platform maintainer.
+- **What:** Monitor catalog rendering, filters, preview/source links, and a
+  representative sample of each preview class.
+- **How discovered:** Current live QA is strong but point-in-time.
+- **Where:** Parent Playwright suite and a bounded production monitor.
+- **When:** On catalog changes and on a scheduled health cadence.
+- **Detailed description:** Preserve desktop/tablet/phone filter behavior,
+  card counts, availability labels, no-overflow behavior, and public link
+  health while avoiding state-changing browser actions.
+- **Acceptance criteria:**
+  - Catalog visual baselines exist for three viewport classes.
+  - Filter and count contracts fail on drift.
+  - Broken preview/source links identify the exact slug.
+  - Console warnings and errors fail the production smoke suite.
+- **Definition of done:** Catalog and fleet regressions produce actionable,
+  slug-specific failures.
+- **Reason:** The library is now the public entry point for all apps.
+- **Priority:** P2.
+- **Why:** A working Worker is not useful if discovery or navigation breaks.
+- **Regression prevention:** Keep data-contract, DOM, accessibility, and link
+  assertions together.
+- **Testing:** Playwright screenshots/interactions and read-only HTTP checks.
+- **Audit policies:** Non-mutating monitoring, proof-layer labeling, and no
+  claim beyond the tested route.
+- **Other considerations:** Avoid excessive polling and paid-provider flows.
+
+## 1. Project Identity & Strategic Context
+
+**Confidence: High — verified 2026-07-29.**
+
+Project: OwnASquare public app library and 50-app hosted-preview fleet.
+
+Success means every catalog item is discoverable, filterable, publicly
+previewable at its canonical subdomain, and linked to public source. Hosted
+preview, full product runtime, and formal release certification remain separate
+truth states. The user explicitly chose direct Wrangler CLI deployment through
+the existing OwnASquare profile for this rollout.
+
+## 2. Current System State & Architecture Map
+
+**Confidence: High — live readback and tests completed.**
+
+- Parent repository:
+  `/Users/fortunevieyra/Documents/Github/ownasquare.com/ownasquare`
+- Catalog: 50 records, 50 hosted-preview links, 50 GitHub source links.
+- Public library: `https://ownasquare.com/apps/`
+- Canonical preview pattern: `https://<slug>.ownasquare.com`
+- Parent Worker: `ownasquare-platform`
+- Repaired parent Worker version:
+  `243d0f4f-f128-4d36-b8db-9e8d0d61e564`
+- Deployment classes: 34 real static/client interfaces and 16 clearly labeled
+  read-only product tours.
+- Production checks: 50/50 previews and 50/50 source URLs returned HTTP 200.
+
+Architecture:
+
+`catalog data -> isolated per-app build/config -> secret-safe Wrangler profile
+-> exact custom domain -> live HTTP verification -> catalog UI/E2E`
+
+## 3. Critical Decisions & Reasoning History
+
+**Confidence: High.**
+
+- Wrangler CLI was selected after the user explicitly authorized it.
+- Every Wrangler mutation unsets the inherited account selector and uses the
+  named `ownasquare` profile.
+- Each generated preview configuration owns exactly one app subdomain.
+- Client-side apps use their real demo/build mode where available.
+- Runtime-dependent products use truthful read-only tours rather than simulated
+  claims of local-model, Python, provider, database, or autonomous execution.
+- Availability is promoted only after public HTTP verification.
+- Formal immutable release certification remains follow-up hardening, not a
+  prerequisite for saying that the current public preview loads.
+
+## 4. Recent Work & Iteration Log
+
+**Confidence: High.**
+
+- Expanded the library from 3 hosted previews to all 50 catalog apps.
+- Added catalog category, use-case, simplicity, and availability behavior for
+  the complete preview fleet.
+- Added deterministic deployment runners for the static/Vite batch and the
+  remaining runtime-classified fleet.
+- Added live preview and GitHub source verifiers.
+- Added Node data/config contracts and Playwright catalog behavior coverage.
+- Deployed all app subdomains through Wrangler.
+- Repaired an early inherited-config route issue and redeployed the parent
+  Worker.
+- Hard-reloaded and tested the production catalog in Chrome at desktop and
+  mobile widths.
+- Updated completion, plan, and continuation documentation.
+
+## 5. Testing, Validation & Quality Framework
+
+**Confidence: High.**
+
+Completed:
+
+- `npm test` — 18/18 pass.
+- `npm run test:e2e` — 24/24 Playwright tests pass across phone, tablet,
+  and desktop.
+- `npm run verify:previews` — 50/50 HTTP 200 HTML.
+- `npm run verify:sources` — 50/50 GitHub HTTP 200.
+- Wrangler parent dry run — pass.
+- Live Chrome QA — 50 cards, 50 preview states, 50 preview links, 50 source
+  links, Education filter, clear action, mobile filter drawer, no horizontal
+  overflow, and no console warnings/errors.
+- Apex, `www`, library, and sampled app readback — HTTP 200 after repair.
+
+Quality policy: Cypress remains component-only; all E2E behavior is Playwright.
+
+## 6. Debugging History & Failure Modes
+
+**Confidence: High.**
+
+Primary failure: `deploy-remaining-previews.mjs` initially invoked Wrangler
+from the parent repository without an explicit app config. Wrangler inherited
+the parent `wrangler.jsonc`, so four preview Workers briefly received the apex
+and `www` routes in addition to app subdomains.
+
+Recovery:
+
+1. Stopped the batch.
+2. Redeployed `ownasquare-platform` to restore apex and `www`.
+3. Verified apex, library, and preview HTTP 200.
+4. Changed the runner to generate isolated
+   `.preview-build/configs/<slug>.jsonc` files.
+5. Passed each file explicitly with `--config`.
+6. Verified deployment output contained only the intended app hostname.
+7. Completed the batch and reran the complete fleet checks.
+
+Other boundary: the inherited `CLOUDFLARE_ACCOUNT_ID` belongs to another
+project. It must always be removed for OwnASquare commands.
+
+## 7. Established Processes & Workflow
+
+**Confidence: High.**
+
+Run from the parent repository:
+
+```sh
+npm test
+npm run test:e2e
+npm run verify:previews
+npm run verify:sources
+```
+
+Deploy preview batches only through the scripts:
+
+```sh
+npm run deploy:previews
+npm run deploy:previews:remaining
+```
+
+Direct parent Worker dry run/deploy pattern:
+
+```sh
+/Users/fortunevieyra/.codex/bin/codex-secret-safe-exec.py \
+  --unset CLOUDFLARE_ACCOUNT_ID -- \
+  npx wrangler deploy --dry-run --profile ownasquare
+```
+
+```sh
+/Users/fortunevieyra/.codex/bin/codex-secret-safe-exec.py \
+  --unset CLOUDFLARE_ACCOUNT_ID -- \
+  npx wrangler deploy --profile ownasquare
+```
+
+Never deploy a preview without an explicit isolated `--config` file. Verify
+the exact hostname in Wrangler output and by public readback.
+
+## 8. Known Risks, Technical Debt & Do Not Touch List
+
+**Confidence: High.**
+
+- Sixteen previews are tours, not full server runtimes.
+- Direct Wrangler publication lacks complete immutable source/provider
+  certification.
+- Do not attach apex or `www` to any preview Worker.
+- Do not remove `--unset CLOUDFLARE_ACCOUNT_ID`.
+- Do not print or persist Cloudflare tokens/account identifiers.
+- Do not edit child app repositories merely to produce preview build output;
+  direct output to parent `.preview-build/`.
+- Do not call a tour a full runtime without workflow, provider, and data proof.
+- Do not infer GitHub availability from catalog metadata; run the source check.
+
+## 9. Key Artifacts, Evidence & References
+
+**Confidence: High.**
+
+- Completion:
+  `docs/ownasquare/2026-07-29-hosted-preview-fleet.md`
+- Superseded/historical plan:
+  `docs/superpowers/plans/2026-07-29-hosted-preview-fleet.md`
+- Catalog:
+  `public/apps/catalog-data.js`, `public/apps/index.html`
+- Deployment:
+  `scripts/deploy-hosted-preview-batch.mjs`,
+  `scripts/deploy-remaining-previews.mjs`
+- Verification:
+  `scripts/verify-preview-fleet.mjs`,
+  `scripts/verify-source-links.mjs`
+- Tests:
+  `tests/site.test.js`, `tests/hosted-preview-batch.test.js`,
+  `tests/remaining-preview-fleet.test.js`, `tests/e2e/home.spec.js`
+- Public entry point: `https://ownasquare.com/apps/`
+
+## 10. Next Steps
+
+**Confidence: High for ordering; implementation is future work.**
+
+1. Add immutable source/provider certification without disturbing the public
+   fleet.
+2. Select tour-based apps for deterministic interactive demos or supported
+   hosted runtimes.
+3. Add scheduled read-only route/link/visual monitoring.
+4. Keep catalog labels synchronized with the real runtime class.
+
+## 11. Continuation Instructions
+
+**Confidence: High.**
+
+Start in the parent repository. Read this handoff, the completion document,
+current git status, current catalog data, and both deployment scripts before
+making changes. Run the non-mutating verification commands first. If deploying,
+use the secret-safe wrapper, unset the inherited account selector, use the
+OwnASquare profile, require isolated configs, deploy serially, and stop on the
+first ambiguous route or account result.
+
+After any change, rerun Node, Playwright, preview, and source checks in
+proportion to scope. Verify the production URL rather than relying on Wrangler
+success output alone. Update completion documentation and this handoff before
+ending.
+
+## 12. Confidence Ledger
+
+**Confidence: High unless explicitly stated otherwise.**
+
+- 50 catalog records: high, directly tested.
+- 50 public preview URLs: high, live HTTP verification.
+- 50 public GitHub URLs: high, live HTTP verification.
+- Parent/catalog production health: high, Worker deployment plus browser and
+  HTTP readback.
+- Filter/responsive behavior: high, Playwright and live Chrome.
+- Full runtime for 34 static/client apps: high for the published client
+  interface, not for any untested external integration.
+- Full runtime for 16 tours: intentionally not claimed.
+- Formal immutable production certification: not complete.
+- Future provider state: may drift; always refresh before mutation.
