@@ -1,6 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "ownasquare-platform",
+  "account_id": "84a701a23afcd1b863bbf7f1b29bafa2",
   "main": "./src/index.js",
   "compatibility_date": "2026-07-27",
   "compatibility_flags": [
