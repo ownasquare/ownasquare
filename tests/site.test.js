@@ -154,6 +154,35 @@ test("adventure page tells the useful-app story without inventing published vide
   assert.match(html, /aria-current="page"/);
 });
 
+test("every public page links to the contact page and uses the logo mark", async () => {
+  const pages = ["index.html", "apps/index.html", "adventure/index.html"];
+
+  for (const page of pages) {
+    const html = await readFile(new URL(page, siteRoot), "utf8");
+    assert.match(html, /href="\/contact-us\/"/, `${page} links to contact`);
+    assert.match(
+      html,
+      /class="brand-mark-logo"[\s\S]*?src="\/ownasquare-logo\.png"/,
+      `${page} uses the logo image`,
+    );
+    assert.doesNotMatch(html, /class="brand-mark"/, `${page} drops old mark`);
+  }
+});
+
+test("contact page offers a working form plus a direct email fallback", async () => {
+  const html = await readFile(new URL("contact-us/index.html", siteRoot), "utf8");
+
+  assert.match(html, /<form[^>]*action="\/api\/contact"[^>]*method="post"/);
+  assert.match(html, /data-contact-form/);
+  assert.match(html, /name="name"/);
+  assert.match(html, /name="email"/);
+  assert.match(html, /name="message"/);
+  assert.match(html, /name="company"/); // honeypot
+  assert.match(html, /mailto:hello@ownasquare\.com/);
+  assert.match(html, /<noscript>/);
+  assert.match(html, /aria-current="page"/);
+});
+
 test("styles include mobile, tablet, desktop, dark, and reduced-motion rules", async () => {
   const css = await readFile(new URL("styles.css", siteRoot), "utf8");
 
